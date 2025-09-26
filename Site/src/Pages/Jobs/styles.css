@@ -1,0 +1,166 @@
+/* Jobs Page Styles - Dark Theme */
+.jobs-container {
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+  background-color: #1a1a1a;
+  min-height: 100vh;
+  color: #e0e0e0;
+}
+
+.jobs-title {
+  margin-bottom: 30px;
+  color: #ffffff;
+}
+
+.jobs-grid {
+  display: grid;
+  gap: 20px;
+}
+
+.job-card {
+  border: 1px solid #333;
+  border-radius: 8px;
+  padding: 20px;
+  background-color: #2d2d2d;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+  transition: box-shadow 0.3s ease;
+  cursor: pointer;
+}
+
+.job-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.job-card:hover {
+  box-shadow: 0 4px 8px rgba(0,0,0,0.5);
+  border-color: #555;
+}
+
+.job-title {
+  margin: 0;
+  color: #ffffff;
+  font-size: 1.5rem;
+  flex: 1;
+  text-align: left;
+}
+
+
+.view-details-btn {
+  margin: 0 0 0 15px;
+  padding: 10px 20px;
+  background-color: #3498db;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.3s ease;
+  flex-shrink: 0;
+}
+
+.view-details-btn:hover {
+  background-color: #2980b9;
+}
+
+.jobs-counter {
+  margin-top: 30px;
+  text-align: center;
+  color: #b0b0b0;
+  font-size: 14px;
+}
+
+/* Loading States */
+.loading-container {
+  padding: 20px;
+  text-align: center;
+  background-color: #1a1a1a;
+  color: #e0e0e0;
+}
+
+.error-container {
+  padding: 20px;
+  text-align: center;
+  background-color: #1a1a1a;
+  color: #e0e0e0;
+}
+
+.error-title {
+  color: #ff6b6b;
+  margin-bottom: 15px;
+}
+
+.error-message {
+  color: #b0b0b0;
+  margin-bottom: 20px;
+}
+
+.retry-btn {
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  margin-right: 10px;
+  transition: background-color 0.3s ease;
+}
+
+.retry-btn:hover {
+  background-color: #0056b3;
+}
+
+.demo-data-btn {
+  padding: 10px 20px;
+  background-color: #28a745;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.3s ease;
+}
+
+.demo-data-btn:hover {
+  background-color: #218838;
+}
+
+.no-jobs-message {
+  color: #b0b0b0;
+  font-style: italic;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .job-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+  
+  .view-details-btn {
+    margin: 0;
+    width: 100%;
+  }
+  
+  .job-title {
+    font-size: 1.3rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .jobs-container {
+    padding: 15px;
+  }
+  
+  .job-card {
+    padding: 15px;
+  }
+  
+  .job-title {
+    font-size: 1.2rem;
+  }
+}

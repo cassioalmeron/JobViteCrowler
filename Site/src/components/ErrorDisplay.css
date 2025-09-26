@@ -1,0 +1,86 @@
+/* Error Display Component Styles - Dark Theme */
+.error-display-container {
+  padding: 40px;
+  text-align: center;
+  background-color: #1a1a1a;
+  border-radius: 8px;
+  margin: 20px;
+  border: 1px solid #333;
+  color: #e0e0e0;
+}
+
+.error-display-title {
+  color: #ff6b6b;
+  font-size: 1.8rem;
+  margin-bottom: 15px;
+}
+
+.error-display-message {
+  color: #b0b0b0;
+  font-size: 1.1rem;
+  margin-bottom: 25px;
+}
+
+.error-display-buttons {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.error-display-retry-btn {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.3s ease;
+}
+
+.error-display-retry-btn:hover {
+  background-color: #0056b3;
+}
+
+.error-display-back-btn {
+  background-color: #6c757d;
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.3s ease;
+}
+
+.error-display-back-btn:hover {
+  background-color: #5a6268;
+}
+
+/* Responsive Design */
+@media (max-width: 480px) {
+  .error-display-container {
+    padding: 20px;
+    margin: 10px;
+  }
+  
+  .error-display-title {
+    font-size: 1.5rem;
+  }
+  
+  .error-display-message {
+    font-size: 1rem;
+  }
+  
+  .error-display-buttons {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .error-display-retry-btn,
+  .error-display-back-btn {
+    width: 100%;
+    max-width: 200px;
+  }
+}

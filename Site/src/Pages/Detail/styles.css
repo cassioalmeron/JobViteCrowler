@@ -1,0 +1,243 @@
+/* Job Detail Page Styles - Dark Theme */
+
+/* Force dark theme on all elements */
+.detail-container * {
+  color: inherit;
+}
+
+.detail-container {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #1a1a1a !important;
+  min-height: 100vh;
+  color: #e0e0e0 !important;
+}
+
+.detail-header {
+  border-bottom: 2px solid #333;
+  padding-bottom: 20px;
+  margin-bottom: 30px;
+}
+
+.detail-back-btn {
+  background-color: #6c757d;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  margin-bottom: 20px;
+  transition: background-color 0.3s ease;
+}
+
+.detail-back-btn:hover {
+  background-color: #5a6268;
+}
+
+.detail-title {
+  color: #ffffff;
+  font-size: 2.5rem;
+  margin: 0 0 10px 0;
+  line-height: 1.2;
+}
+
+.detail-job-id {
+  color: #b0b0b0;
+  font-size: 1.1rem;
+  margin: 0;
+  font-weight: 500;
+}
+
+.detail-content {
+  margin-bottom: 40px;
+}
+
+.detail-description {
+  background-color: #2d2d2d !important;
+  border-radius: 8px;
+  padding: 30px;
+  border-left: 4px solid #007bff;
+}
+
+.detail-section-title {
+  color: #ffffff;
+  font-size: 1.8rem;
+  margin: 0 0 20px 0;
+  border-bottom: 2px solid #555;
+  padding-bottom: 10px;
+}
+
+.detail-description-text {
+  line-height: 1.8;
+  color: #ffffff !important;
+  text-align: left;
+}
+
+.detail-description-text * {
+  color: #ffffff !important;
+}
+
+/* Force white color on all text elements within description */
+.detail-description-text,
+.detail-description-text p,
+.detail-description-text div,
+.detail-description-text span,
+.detail-description-text li,
+.detail-description-text td,
+.detail-description-text th {
+  color: #ffffff !important;
+}
+
+/* HTML content styling within job description */
+.detail-description-text h1,
+.detail-description-text h2,
+.detail-description-text h3,
+.detail-description-text h4,
+.detail-description-text h5,
+.detail-description-text h6 {
+  color: #ffffff !important;
+  margin: 20px 0 10px 0;
+  font-weight: 600;
+}
+
+.detail-description-text h3 {
+  font-size: 1.4rem;
+  border-bottom: 2px solid #555;
+  padding-bottom: 8px;
+}
+
+.detail-description-text p {
+  margin: 0 0 15px 0;
+  font-size: 1.1rem;
+  text-align: left;
+  color: #ffffff !important;
+}
+
+.detail-description-text div {
+  margin: 0 0 10px 0;
+  font-size: 1.1rem;
+  text-align: left;
+  color: #ffffff !important;
+}
+
+.detail-description-text strong {
+  font-weight: 600;
+  color: #ffffff !important;
+}
+
+.detail-description-text br {
+  line-height: 1.5;
+}
+
+.detail-description-text ul,
+.detail-description-text ol {
+  margin: 10px 0 15px 20px;
+  padding-left: 0;
+}
+
+.detail-description-text li {
+  margin: 5px 0;
+  font-size: 1.1rem;
+  color: #ffffff !important;
+}
+
+.detail-paragraph {
+  margin: 0 0 15px 0;
+  font-size: 1.1rem;
+  text-align: left;
+  color: #ffffff !important;
+}
+
+.detail-paragraph:last-child {
+  margin-bottom: 0;
+}
+
+.detail-footer {
+  border-top: 2px solid #333;
+  padding-top: 30px;
+  text-align: center;
+}
+
+.detail-apply-btn {
+  background-color: #28a745;
+  color: white;
+  border: none;
+  padding: 15px 40px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 18px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.detail-apply-btn:hover {
+  background-color: #218838;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+}
+
+/* Loading and Error States */
+.detail-loading-container {
+  padding: 40px;
+  text-align: center;
+  background-color: #1a1a1a;
+  border-radius: 8px;
+  margin: 20px;
+  color: #e0e0e0;
+}
+
+.detail-loading-container h2 {
+  color: #b0b0b0;
+  font-size: 1.5rem;
+}
+
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .detail-container {
+    padding: 15px;
+  }
+  
+  .detail-title {
+    font-size: 2rem;
+  }
+  
+  .detail-description {
+    padding: 20px;
+  }
+  
+  .detail-section-title {
+    font-size: 1.5rem;
+  }
+  
+  .detail-paragraph {
+    font-size: 1rem;
+  }
+  
+  .detail-apply-btn {
+    padding: 12px 30px;
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .detail-title {
+    font-size: 1.8rem;
+  }
+  
+  .detail-description {
+    padding: 15px;
+  }
+  
+  .detail-section-title {
+    font-size: 1.3rem;
+  }
+  
+  .detail-apply-btn {
+    padding: 10px 25px;
+    font-size: 14px;
+  }
+}
