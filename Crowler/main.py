@@ -31,7 +31,9 @@ def six_hours_logger():
     while True:
         logging.info(f"Crowler service is running - {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
         run_crowler_job()
-        time.sleep(6 * 3600)  # Sleep for 6 hours (21600 seconds)
+        
+        hours_delay = int(os.getenv('HOURS_DELAY'))
+        time.sleep(hours_delay * 3600)
 
 def run_crowler_job():
     """Run the main crowler job"""
@@ -59,7 +61,7 @@ def main():
     except Exception as e:
         logging.error(f"Unexpected error in service: {e}")
         
-service_name = "LeanTech Jobs Crowler"
+service_name = os.getenv('SERVICE_NAME')
 
 def install_service():
     """Install the crowler service using service_manager"""
@@ -96,9 +98,9 @@ if __name__ == "__main__":
         else:
             print("Invalid action. Available actions: install, start, stop, uninstall")
             print("Usage:")
-            print("  python3 crowler_service.py          # Run as service")
-            print("  python3 crowler_service.py install  # Install service")
-            print("  python3 crowler_service.py start    # Start service")
-            print("  python3 crowler_service.py stop     # Stop service")
-            print("  python3 crowler_service.py uninstall # Uninstall service")
+            print("  python3 main.py          # Run as service")
+            print("  python3 main.py install  # Install service")
+            print("  python3 main.py start    # Start service")
+            print("  python3 main.py stop     # Stop service")
+            print("  python3 main.py uninstall # Uninstall service")
             sys.exit(1)
