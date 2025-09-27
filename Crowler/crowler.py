@@ -10,7 +10,13 @@ from ftptransfer import upload_jobs_to_ftp
 from datetime import datetime
 
 def get_driver():
+    chrome_driver_path = os.getenv('CHROME_DRIVER_PATH')
+    
     options = webdriver.ChromeOptions()
+    if chrome_driver_path:
+        options.binary_location = chrome_driver_path
+        options.add_argument("--headless")
+    
     return webdriver.Chrome(options=options)
 
 def get_jobs(driver):

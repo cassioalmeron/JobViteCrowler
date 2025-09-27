@@ -58,23 +58,25 @@ def main():
         logging.info("Crowler service stopped by user")
     except Exception as e:
         logging.error(f"Unexpected error in service: {e}")
+        
+service_name = "LeanTech Jobs Crowler"
 
 def install_service():
     """Install the crowler service using service_manager"""
     app_path = os.path.abspath(__file__)
-    manage_service("crowler", "install", app_path)
+    manage_service(service_name, "install", app_path)
     
 def start_service():
     """Start the crowler service using service_manager"""
-    manage_service("crowler", "start")
+    manage_service(service_name, "start")
     
 def stop_service():
     """Stop the crowler service using service_manager"""
-    manage_service("crowler", "stop")
+    manage_service(service_name, "stop")
     
 def uninstall_service():
     """Uninstall the crowler service using service_manager"""
-    manage_service("crowler", "uninstall")
+    manage_service(service_name, "uninstall")
 
 if __name__ == "__main__":
     # Se não há argumentos, executa como serviço
