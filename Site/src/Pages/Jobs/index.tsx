@@ -7,7 +7,7 @@ import type { JobsResponse } from '../../../types';
 
 const Jobs = () => {
   const navigate = useNavigate();
-  const [jobs, setJobs] = useState<JobsResponse>({ jobs: [], last_updated: '' });
+  const [jobs, setJobs] = useState<JobsResponse>({ jobs: [], lastUpdated: '' });
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -24,7 +24,7 @@ const Jobs = () => {
         const errorMessage = err instanceof Error ? err.message : 'Failed to fetch jobs';
         setError(errorMessage);
         console.error('Error fetching jobs:', err);
-        setJobs({ jobs: [], last_updated: '' }); // Reset jobs array on error
+        setJobs({ jobs: [], lastUpdated: '' }); // Reset jobs array on error
       } finally {
         setLoading(false);
       }
@@ -60,28 +60,34 @@ const Jobs = () => {
 
   return (
     <div className="jobs-container">
-      <img src={logo} alt="Lean Tech" className="logo" />
+      <a href="https://www.leangroup.com/solutions-and-services/technology" target='_blank'>
+        <img src={logo} alt="Lean Tech" className="logo" />
+      </a>
       
       {jobs.jobs.length === 0 ? (
         <p className="no-jobs-message">No jobs available at the moment.</p>
       ) : (
         <div className="jobs-grid">
           {jobs.jobs.map((job) => (
-            <div key={job.jobvite_id} className="job-card">
+            <div key={job.jobviteId} className="job-card">
               <div className="job-header">
                 <h2 className="job-title">
-                  {job.job_title}
+                  {job.jobTitle}
                 </h2>
                 
                 <button
                   className="view-details-btn"
                   onClick={() => {
                     // Navigate to job detail page
-                    navigate(`/detail?id=${job.jobvite_id}`);
+                    navigate(`/detail?id=${job.jobviteId}`);
                   }}
                 >
                   View Details
                 </button>
+              </div>
+
+              <div className="job-section">
+                <p className="job-section-content">{job.sector} | {job.workMode} | {job.country}</p>
               </div>
             </div>
           ))}
@@ -92,7 +98,7 @@ const Jobs = () => {
         Total jobs: {jobs.jobs.length}
       </div>
       <div className="jobs-counter">
-        Last updated: {jobs.last_updated}
+        Last updated: {jobs.lastUpdated}
       </div>
     </div>
   );

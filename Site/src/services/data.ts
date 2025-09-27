@@ -18,6 +18,6 @@ export const getJobs = async () : Promise<JobsResponse> => {
 
 export const getJob = async (id: string) : Promise<Job | null> => {
     const jobs = await getJobs();
-    const job = jobs.jobs.find((job) => job.jobvite_id === id);
+        const job = jobs.jobs.find((job) => job.jobviteId === id);
     return job || null;
 }

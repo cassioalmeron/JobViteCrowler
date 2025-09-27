@@ -164,3 +164,13 @@
     font-size: 1.2rem;
   }
 }
+
+.job-section {
+  margin-top: 10px;
+  text-align: left;
+}
+
+.job-section-content {
+  font-size: 14px;
+  color: #b0b0b0;
+}

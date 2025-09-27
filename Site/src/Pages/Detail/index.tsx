@@ -85,15 +85,19 @@ const Detail = () => {
         >
           ← Back to Jobs
         </button>
-        <h1 className="detail-title">{job.job_title}</h1>
-        <p className="detail-job-id">Job ID: {job.jobvite_id}</p>
+        <h1 className="detail-title">{job.jobTitle}</h1>
+        <p className="detail-job-id">Job ID: {job.jobviteId}</p>
+      </div>
+
+      <div className="detail-section">
+        <p className="detail-section-content">{job.sector} | {job.workMode} | {job.country}</p>
       </div>
 
       <div className="detail-content">
         <div className="detail-description">
           <div 
             className="detail-description-text"
-            dangerouslySetInnerHTML={{ __html: job.job_description }}
+            dangerouslySetInnerHTML={{ __html: job.jobDescription }}
           />
         </div>
       </div>
@@ -102,8 +106,8 @@ const Detail = () => {
         <button 
           className="detail-apply-btn"
           onClick={() => {
-            const jobTitle = job.job_title;
-            const jobId = job.jobvite_id;
+            const jobTitle = job.jobTitle;
+            const jobId = job.jobviteId;
             const message = `Hello! I'm interested in applying for the position: ${jobTitle} (Job ID: ${jobId}). Could you please provide more information about the application process?`;
             const whatsappUrl = `https://wa.me/5554991259084?text=${encodeURIComponent(message)}`;
             window.open(whatsappUrl, '_blank');

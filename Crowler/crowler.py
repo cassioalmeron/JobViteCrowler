@@ -52,7 +52,7 @@ def get_jobs(driver):
             jobvite_id = link_href.split("/")[-1]
             job_title = element.text.strip()
             if job_title:  # Only add non-empty titles
-                job_titles.append({"jobvite_id": jobvite_id, "job_title": job_title})
+                job_titles.append({"jobviteId": jobvite_id, "jobTitle": job_title})
         
         return job_titles
         
@@ -60,7 +60,52 @@ def get_jobs(driver):
         print(f"Error occurred: {e}")
         return []
         
-def get_job_description(driver, jobvite_id) -> str:
+def get_job_meta_info(driver, jobvite_id) -> dict:
+    """Extract sector, work mode and country from job meta information"""
+    try:
+        # Wait for meta element to be present
+        wait = WebDriverWait(driver, 5)
+        wait.until(EC.presence_of_element_located((By.CLASS_NAME, "jv-job-detail-meta")))
+        
+        meta_element = driver.find_element(By.CLASS_NAME, "jv-job-detail-meta")
+        meta_text = meta_element.get_attribute("innerHTML")
+        
+        # Parse the meta information
+        sector = ""
+        work_mode = ""
+        country = ""
+        
+        # Extract text content and split by separators
+        import re
+        # Remove HTML tags and get clean text
+        clean_text = re.sub(r'<[^>]+>', '|', meta_text)
+        clean_text = clean_text.replace('&amp;', '&')
+        
+        # Split by separators (| and ,)
+        parts = [part.strip() for part in re.split(r'[|,]', clean_text) if part.strip()]
+        
+        if len(parts) >= 1:
+            sector = parts[0]
+        if len(parts) >= 2:
+            work_mode = parts[1]
+        if len(parts) >= 3:
+            country = parts[2]
+        
+        return {
+            "sector": sector,
+            "work_mode": work_mode,
+            "country": country
+        }
+        
+    except Exception as e:
+        print(f"Error extracting meta info for job {jobvite_id}: {e}")
+        return {
+            "sector": "",
+            "work_mode": "",
+            "country": ""
+        }
+
+def get_job_description(driver, jobvite_id) -> dict:
     driver.get(f"https://jobs.jobvite.com/leantechio/job/{jobvite_id}")
     
     wait = WebDriverWait(driver, 10)
@@ -68,14 +113,29 @@ def get_job_description(driver, jobvite_id) -> str:
     try:
         wait.until(EC.presence_of_element_located((By.CLASS_NAME, "jv-job-detail-description")))
         
-        #job_title = driver.find_element(By.CLASS_NAME, "jv-job-details-title").text
+        # Get job description
         job_description = driver.find_element(By.CLASS_NAME, "jv-job-detail-description").get_attribute("innerHTML")
+        job_description = job_description.replace("background-color: rgb(255,255,255);", "none")
+        job_description = job_description.replace("\n", "")
         
-        return job_description
+        # Get meta information (sector, work mode, country)
+        meta_info = get_job_meta_info(driver, jobvite_id)
+        
+        return {
+            "description": job_description,
+            "sector": meta_info["sector"],
+            "work_mode": meta_info["work_mode"],
+            "country": meta_info["country"]
+        }
         
     except Exception as e:
         print(f"Error occurred: {e}")
-        return {}
+        return {
+            "description": "",
+            "sector": "",
+            "work_mode": "",
+            "country": ""
+        }
     
 def sync_jobs():
     """Sync jobs from website and save to JSON file"""
@@ -86,16 +146,25 @@ def sync_jobs():
         json.dump(jobs, f, indent=2, ensure_ascii=False)
     print("Created new jobs.json file")
     
-    # Update job descriptions
+    # Update job descriptions and meta information
     for job in jobs:
-        jobvite_id = job["jobvite_id"]
-        print(jobvite_id, job["job_title"])
-        job_description = get_job_description(driver, jobvite_id)
-        job["job_description"] = job_description
+        jobvite_id = job["jobviteId"]
+        print(f"Processing {jobvite_id}: {job['jobTitle']}")
+        job_details = get_job_description(driver, jobvite_id)
+        
+        # Add all the extracted information in camelCase
+        job["jobDescription"] = job_details["description"]
+        job["sector"] = job_details["sector"]
+        job["workMode"] = job_details["work_mode"]
+        job["country"] = job_details["country"]
+        
+        print(f"  Sector: {job['sector']}")
+        print(f"  Work Mode: {job['workMode']}")
+        print(f"  Country: {job['country']}")
         
     json_content = {
         "jobs": jobs,
-        "last_updated": datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        "lastUpdated": datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     }
     
     # Save updated jobs
