@@ -14,7 +14,7 @@ from crowler import sync_jobs, upload_jobs_to_ftp
 from service_manager import manage_service
 
 # Configure logging
-log_dir = "/var/log"
+log_dir = "logs"
 os.makedirs(log_dir, exist_ok=True)
 
 logging.basicConfig(
