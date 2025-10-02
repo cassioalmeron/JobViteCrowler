@@ -141,10 +141,11 @@ def sync_jobs():
     """Sync jobs from website and save to JSON file"""
     driver = get_driver()
     
+    # Create jobs directory if it doesn't exist
+    jobs_dir = "jobs"
+    os.makedirs(jobs_dir, exist_ok=True)
+    
     jobs = get_jobs(driver)
-    with open('jobs.json', 'w', encoding='utf-8') as f:
-        json.dump(jobs, f, indent=2, ensure_ascii=False)
-    print("Created new jobs.json file")
     
     # Update job descriptions and meta information
     for job in jobs:
@@ -152,8 +153,13 @@ def sync_jobs():
         print(f"Processing {jobvite_id}: {job['jobTitle']}")
         job_details = get_job_description(driver, jobvite_id)
         
+        # Save job description to separate HTML file
+        html_file_path = os.path.join(jobs_dir, f"{jobvite_id}.html")
+        with open(html_file_path, 'w', encoding='utf-8') as html_file:
+            html_file.write(job_details["description"])
+        print(f"  Saved description to: {html_file_path}")
+        
         # Add all the extracted information in camelCase
-        job["jobDescription"] = job_details["description"]
         job["sector"] = job_details["sector"]
         job["workMode"] = job_details["work_mode"]
         job["country"] = job_details["country"]

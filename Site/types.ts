@@ -1,7 +1,7 @@
 export type Job = {
     jobviteId: string;
     jobTitle: string;
-    jobDescription: string;
+    jobDescription?: string;
     sector: string;
     workMode: string;
     country: string;

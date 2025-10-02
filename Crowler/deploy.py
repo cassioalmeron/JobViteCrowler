@@ -20,24 +20,27 @@ def upload_service_files():
     ftp.login(ftp_username, ftp_password)
     ftp.cwd(ftp_directory) 
     
-    # Define the source directory
-    source_dir = "../Site/dist"
+    # Define the source directories
+    source_dirs = ["../Site/dist", "jobs"]
     
-    if not os.path.exists(source_dir):
-        print(f"Warning: Source directory {source_dir} does not exist")
-        ftp.quit()
-        return
-    
-    # Get all files from the dist directory recursively
+    # Get all files from the source directories recursively
     files_to_upload = []
     
-    # Get all files recursively
-    for root, dirs, files in os.walk(source_dir):
-        for file in files:
-            file_path = os.path.join(root, file)
-            # Calculate relative path from source_dir
-            relative_path = os.path.relpath(file_path, source_dir)
-            files_to_upload.append((file_path, relative_path))
+    for source_dir in source_dirs:
+        if not os.path.exists(source_dir):
+            print(f"Warning: Source directory {source_dir} does not exist")
+            continue
+            
+        # Get all files recursively from each directory
+        for root, dirs, files in os.walk(source_dir):
+            for file in files:
+                file_path = os.path.join(root, file)
+                # Calculate relative path from source_dir
+                relative_path = os.path.relpath(file_path, source_dir)
+                # Add directory name prefix to avoid conflicts
+                if source_dir == "jobs":
+                    relative_path = f"jobs/{relative_path}"
+                files_to_upload.append((file_path, relative_path))
     
     # Upload each file
     uploaded_count = 0

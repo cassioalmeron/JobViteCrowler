@@ -97,7 +97,7 @@ const Detail = () => {
         <div className="detail-description">
           <div 
             className="detail-description-text"
-            dangerouslySetInnerHTML={{ __html: job.jobDescription }}
+            dangerouslySetInnerHTML={{ __html: job.jobDescription || '' }}
           />
         </div>
       </div>
