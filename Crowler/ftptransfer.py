@@ -20,9 +20,36 @@ def upload_jobs_to_ftp():
     ftp.login(ftp_username, ftp_password)
     ftp.cwd(ftp_directory) 
     
-    # Use storbinary for binary files instead of storlines
+    # Upload jobs.json file
     with open('jobs.json', 'rb') as file:
         ftp.storbinary('STOR jobs.json', file)
+    print("jobs.json uploaded successfully")
+    
+    # Upload jobs directory
+    jobs_dir = "jobs"
+    if os.path.exists(jobs_dir):
+        # Create jobs directory on FTP server
+        try:
+            ftp.mkd('jobs')
+        except:
+            pass  # Directory might already exist
+        
+        # Get all HTML files from jobs directory
+        jobs_files = []
+        for file in os.listdir(jobs_dir):
+            if file.endswith('.html'):
+                local_path = os.path.join(jobs_dir, file)
+                jobs_files.append((local_path, f'jobs/{file}'))
+        
+        # Upload each HTML file
+        for local_path, remote_path in jobs_files:
+            with open(local_path, 'rb') as file:
+                ftp.storbinary(f'STOR {remote_path}', file)
+            print(f"Uploaded: {remote_path}")
+        
+        print(f"Uploaded {len(jobs_files)} job description files")
+    else:
+        print("Warning: jobs directory does not exist")
     
     ftp.quit()
-    print("jobs.json uploaded successfully to FTP")
+    print("All files uploaded successfully to FTP")
