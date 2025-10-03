@@ -150,6 +150,9 @@ def sync_jobs():
     # Update job descriptions and meta information
     for job in jobs:
         jobvite_id = job["jobviteId"]
+        
+        filename = f"{jobvite_id}.html"
+        
         print(f"Processing {jobvite_id}: {job['jobTitle']}")
         job_details = get_job_description(driver, jobvite_id)
         

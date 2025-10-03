@@ -39,10 +39,15 @@ def upload_jobs_to_ftp():
         for file in os.listdir(jobs_dir):
             if file.endswith('.html'):
                 local_path = os.path.join(jobs_dir, file)
-                jobs_files.append((local_path, f'jobs/{file}'))
+                remote_path = f'jobs/{file}'
+                jobs_files.append((local_path, remote_path))
         
         # Upload each HTML file
         for local_path, remote_path in jobs_files:
+            if ftp.nlst(remote_path):
+                print(f"File {remote_path} already exists")
+                continue
+            
             with open(local_path, 'rb') as file:
                 ftp.storbinary(f'STOR {remote_path}', file)
             print(f"Uploaded: {remote_path}")
