@@ -54,12 +54,64 @@ def get_jobs(driver):
             if job_title:  # Only add non-empty titles
                 job_titles.append({"jobviteId": jobvite_id, "jobTitle": job_title})
         
+        print(f"Found {len(job_titles)} jobs on initial page")
+        
+        # Get additional jobs from "Show More" links
+        new_jobs = get_show_more_jobs(driver)
+        print(f"Found {len(new_jobs)} additional jobs from Show More links")
+        
+        # Merge new jobs with existing ones, avoiding duplicates by jobviteId
+        existing_ids = {job["jobviteId"] for job in job_titles}
+        for new_job in new_jobs:
+            if new_job["jobviteId"] not in existing_ids:
+                job_titles.append(new_job)
+                existing_ids.add(new_job["jobviteId"])
+        
+        print(f"Total unique jobs: {len(job_titles)}")
         return job_titles
         
     except Exception as e:
         print(f"Error occurred: {e}")
         return []
         
+def get_show_more_jobs(driver):
+    """Find and click all 'Show More' links, collecting jobs from each new page"""
+    new_jobs = []
+    
+    # Find all links that contain "Show More" text
+    show_more_links = driver.find_elements(By.XPATH, "//a[contains(., 'Show More')]")
+    
+    print(f"Found {len(show_more_links)} Show More links")
+    
+    for i, link in enumerate(show_more_links):
+        try:
+            href = link.get_attribute("href")
+            print(f"Clicking Show More link {i+1}: {href}")
+            link.click()
+            time.sleep(2)  # Wait for page to load
+            
+            # After clicking, find all job elements on the new page
+            job_elements = driver.find_elements(By.CLASS_NAME, "jv-job-list-name")
+            print(f"Found {len(job_elements)} job elements on new page")
+            
+            # Extract job information from new page
+            for element in job_elements:
+                try:
+                    link_element = element.find_element(By.TAG_NAME, "a")
+                    link_href = link_element.get_attribute("href")
+                    jobvite_id = link_href.split("/")[-1]
+                    job_title = element.text.strip()
+                    if job_title:  # Only add non-empty titles
+                        new_jobs.append({"jobviteId": jobvite_id, "jobTitle": job_title})
+                except Exception as e:
+                    print(f"Error processing job element on new page: {e}")
+                    continue
+                    
+        except Exception as e:
+            print(f"Error clicking link {i+1}: {e}")
+    
+    return new_jobs
+
 def get_job_meta_info(driver, jobvite_id) -> dict:
     """Extract sector, work mode and country from job meta information"""
     try:
@@ -184,4 +236,4 @@ def sync_jobs():
     
 if __name__ == "__main__":
     sync_jobs()
-    upload_jobs_to_ftp()
+    #upload_jobs_to_ftp()
