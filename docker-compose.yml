@@ -1,0 +1,31 @@
+version: '3.8'
+
+services:
+  crowler:
+    build:
+      context: ./Crowler
+      target: ${BUILD_TARGET:-production}
+    container_name: jobvite-crowler
+    environment:
+      - FTP_HOST=${FTP_HOST}
+      - FTP_USERNAME=${FTP_USERNAME}
+      - FTP_PASSWORD=${FTP_PASSWORD}
+      - FTP_DIRECTORY=${FTP_DIRECTORY}
+      - CHROME_DRIVER_PATH=/usr/bin/chromedriver
+      - HOURS_DELAY=${HOURS_DELAY}
+      - SERVICE_NAME=${SERVICE_NAME}
+      - SERVICE_DESCRIPTION=${SERVICE_DESCRIPTION}
+    volumes:
+      - ./Crowler/jobs:/app/jobs
+      - ./Crowler/logs:/app/logs
+    dns:
+      - 8.8.8.8
+      - 8.8.4.4
+    networks:
+      - default
+    restart: unless-stopped
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
